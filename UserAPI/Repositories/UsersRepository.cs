@@ -25,10 +25,7 @@ namespace UserAPI.Repositories
             
         }
 
-        public bool Delete(object key)
-        {
-            throw new NotImplementedException();
-        }
+        
       
         public IEnumerable<User> Get()
         {
@@ -45,10 +42,10 @@ namespace UserAPI.Repositories
         public bool Update(User entity)
         {
             var user = _Dbcontext.Users.AsNoTracking().FirstOrDefault(c => c.Id == entity.Id);//Find(entity.Id);
-            //if (user == null)
-            //{
-              //  throw new OvrsException("Customer not found");
-            //}
+            if (user == null)
+            {
+                throw new Exception("Customer not found");
+            }
             _Dbcontext.Users.Update(entity);
             int recordsAffected = _Dbcontext.SaveChanges();
             if (recordsAffected > 0)
@@ -59,6 +56,23 @@ namespace UserAPI.Repositories
             {
                 return false;
             }
+        }
+
+        public bool Delete(Guid userId)
+        {
+            var user = _Dbcontext.Users.FirstOrDefault(c => c.Id == userId);
+
+            if (user == null)
+            {
+                // User not found, you might want to throw an exception or handle it accordingly.
+                throw new Exception("User not found");
+            }
+
+            _Dbcontext.Users.Remove(user);
+
+            int recordsAffected = _Dbcontext.SaveChanges();
+
+            return recordsAffected > 0;
         }
     }
 }

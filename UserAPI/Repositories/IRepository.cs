@@ -6,7 +6,7 @@
             T Get(Guid key);
             bool Add(T entity);
             bool Update(T entity);
-            bool Delete(object key);
+            bool Delete(Guid key);
         
     }
 }

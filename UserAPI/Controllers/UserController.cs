@@ -27,8 +27,7 @@ namespace UserAPI.Controllers
         {
             
             var users = _repository.Get();
-                return Ok(users);
-
+            return Ok(users);
 
 
         }
@@ -37,8 +36,14 @@ namespace UserAPI.Controllers
         [HttpGet("{guid}")]
         public ActionResult Get(Guid guid)
         {
-            var users = _repository.Get(guid);
-            return Ok(users);
+            var user = _repository.Get(guid);
+
+            if (user != null)
+            {
+                return Ok(user);
+            }
+
+            return NotFound();
         }
 
         [HttpPost]
@@ -84,6 +89,10 @@ namespace UserAPI.Controllers
             {
                 bool isUpdate = _repository.Update(user);
 
+                if (user == null)
+                {
+                    return NotFound();
+                }
                 if (isUpdate)
                 {
                     return Ok(new { Message = "User Updated successfully" });
@@ -97,12 +106,34 @@ namespace UserAPI.Controllers
             catch (Exception ex)
             {
                 // Log the exception or handle it as needed
-                return StatusCode((int)HttpStatusCode.InternalServerError,
-                    new { Message = $"An error occurred during the update process: {ex.Message}" });
+                return NotFound();
             }
         }
 
-          
+        // DELETE api/<CustomersController>/5
+        [HttpDelete("{guid}")]
+        public ActionResult Delete(Guid guid)
+        {
+            try
+            {
+                bool isDeleted = _repository.Delete(guid);
+
+                if (isDeleted)
+                {
+                    return Ok(new { Message = "User Deleted successfully" });
+                }
+                else
+                {
+                    // Consider returning a more informative message or status code here if the deletion fails.
+                    return StatusCode((int)HttpStatusCode.InternalServerError);
+                }
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+        }
+
 
     }
 }
