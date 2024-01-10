@@ -51,7 +51,7 @@ namespace UserAPI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Return a 400 Bad Request response with validation errors
+                
                 return BadRequest(ModelState);
             }
             try
@@ -105,7 +105,7 @@ namespace UserAPI.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception or handle it as needed
+                
                 return NotFound();
             }
         }
@@ -124,7 +124,7 @@ namespace UserAPI.Controllers
                 }
                 else
                 {
-                    // Consider returning a more informative message or status code here if the deletion fails.
+                    
                     return StatusCode((int)HttpStatusCode.InternalServerError);
                 }
             }

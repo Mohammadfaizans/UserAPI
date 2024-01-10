@@ -24,8 +24,6 @@ namespace UserAPI.Repositories
             }
             
         }
-
-        
       
         public IEnumerable<User> Get()
         {
