@@ -19,7 +19,7 @@ public class AppDbContext : DbContext
 
     private void ConfigureUser(EntityTypeBuilder<User> builder)
     {
-        // Other configurations...
+        
 
         builder.Property(u => u.Hobbies)
             .HasConversion(
