@@ -13,7 +13,7 @@ namespace UserAPI.Controllers
     [ApiController]
     [Route("api/users")]
    // [Authorize(Roles = "Admin")]
-    // [Authorize] // All endpoints except login must be authorized
+    [Authorize] 
     public class UserController : ControllerBase
     {
         private IRepository<User> _repository;
